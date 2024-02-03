@@ -20,19 +20,24 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     global stop_stream, past_key_values, history
+    all_resp = ""
     query = request.args.get("text")
     if not query:
         return welcome_prompt
     if query.strip() == "clear":
         past_key_values, history = None, []
         return "已清空对话历史"
+    current_length = 0
     for response, history, past_key_values in model.stream_chat(tokenizer, query, history=history, top_p=1,
                                                                 temperature=0.01,
                                                                 past_key_values=past_key_values,
                                                                 return_past_key_values=True):
         if stop_stream:
             stop_stream = False
-            return response
+            return all_resp
+        else:
+            all_resp = all_resp + response[current_length:]
+            current_length = len(response)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080)
