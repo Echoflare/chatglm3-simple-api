@@ -21,7 +21,7 @@ app = Flask(__name__)
 def main():
     global stop_stream, past_key_values, history
     query = request.args.get("text")
-    if not query.strip():
+    if not query:
         return welcome_prompt
     if query.strip() == "clear":
         past_key_values, history = None, []
