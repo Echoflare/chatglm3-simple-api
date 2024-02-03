@@ -20,7 +20,7 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     global stop_stream, past_key_values, history
-    all_resp = ""
+    all_resp = "test"
     query = request.args.get("text")
     if not query:
         return welcome_prompt
@@ -38,7 +38,6 @@ def main():
         else:
             all_resp = all_resp + response[current_length:]
             current_length = len(response)
-            print(all_resp)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080)
