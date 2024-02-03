@@ -38,6 +38,7 @@ def main():
         else:
             all_resp = all_resp + response[current_length:]
             current_length = len(response)
+            print(all_resp)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080)
